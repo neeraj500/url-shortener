@@ -1,7 +1,7 @@
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getUrls(user_id) {
-    const {data, error} =  await supabase 
+    let {data, error} =  await supabase 
      .from("urls")
      .select("*")
      .eq("user_id", user_id);
@@ -36,7 +36,7 @@ export async function createUrl({ title, longUrl, customUrl, user_id }, qrcode) 
 
    
    const {error: storageError} = await supabase.storage
-    .from("profile_pic")
+    .from("qrs")
     .upload(fileName, qrcode);
 
     if (storageError) throw new Error(storageError.message);
@@ -48,9 +48,9 @@ export async function createUrl({ title, longUrl, customUrl, user_id }, qrcode) 
     .insert([
       {
          title,
-         original_Url: longUrl,
-         curstom_url: customUrl || null,
          user_id,
+         original_url: longUrl,
+         custom_url: customUrl || null,
          short_url,
          qr
       }
@@ -64,3 +64,37 @@ export async function createUrl({ title, longUrl, customUrl, user_id }, qrcode) 
 
     return data;
 }
+
+export async function getLongUrl(id) {
+   const {data, error} = await supabase.from("urls")
+    .select("id, original_url")
+    .or(`short_url.eq.${id}, custom_url.eq.${id}`)
+    .single();
+
+
+   if (error) {
+      console.error(error.message);
+      throw new Error("Error fetching short link"); 
+   }
+
+   return data;
+}
+
+export async function getUrl({id, user_id}) {
+   const {data, error} = await supabase
+    .from("urls")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user_id)
+    .single();
+
+    if (error) {
+      // console.error(error.message);
+         throw new Error("Short Url not found");
+    }
+
+    return data;
+}
+
+
+
