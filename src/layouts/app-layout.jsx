@@ -9,7 +9,7 @@ const AppLayout = () => {
             <Outlet/>
         </main>
         <div className='p-10 text-center bg-gray-800 mt-10'>
-            Made by Neeraj Madake
+            Made with 💖 by Neeraj Madake
         </div>
     
     </div>
