@@ -6,6 +6,8 @@ import { BeatLoader, SyncLoader } from "react-spinners";
 import { deleteUrl } from "@/db/apiUrls";
 
 const LinkCard = ({ url, fetchUrls }) => {
+  // console.log('URL Inside LC ->> ', url.qr);
+
   const downloadImage = () => {
     const imageUrl = url?.qr;
     const fileName = url?.title;

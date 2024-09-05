@@ -1,3 +1,4 @@
+import CreateLink from "@/components/create-link";
 import LinkCard from "@/components/link-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,20 +16,21 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = UrlState();
   const {loading, error, data: urls, fn: fnUrls} = useFetch(getUrls, user.id);
-  const {loading: loadingClicks, data: clicks, fn: fnClicks} = useFetch(getClicksForUrls, urls?.map((url) => url.id))
+  const {loading: loadingClicks, data: clicks, fn: fnClicks} = useFetch(getClicksForUrls, urls?.map((url) => url.id));
 
   useEffect(() => {
     fnUrls();
-  }, [])
-
-  
-  useEffect(() => {
-    if (urls?.length) fnClicks()
-  }, [urls?.length])
+  }, []);
 
   const filteredUrls = urls?.filter((url) => 
     url.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  
+  useEffect(() => {
+    if (urls?.length) fnClicks();
+  }, [urls?.length])
+
 
 
   return (
@@ -56,7 +58,7 @@ const Dashboard = () => {
 
     <div className="flex justify-between">
       <h1 className="text-4xl font-extrabold">My Links</h1>
-      <Button>Create Link</Button>
+      <CreateLink/>
     </div>
 
     <div className="relative">
