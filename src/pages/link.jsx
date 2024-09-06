@@ -15,6 +15,7 @@ const Link = () => {
   const downloadImage = () => {
     const imageUrl = url?.qr;
     const fileName = url?.title;
+    console.log('Qr URL -> ', imageUrl);
 
     // create an anchor element
     const anchor = document.createElement("a");
