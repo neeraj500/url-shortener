@@ -38,7 +38,7 @@ const LandingPage = () => {
           Shorten!
         </Button>
       </form>
-      <img src="./banner.jpg" alt="banner" className="w-full h-full my-11 md:px-11" />
+      <img src={"./banner.jpg"} alt="banner" className="w-full h-full my-11 md:px-11" />
 
       <Accordion type="multiple" collapsible="true" className="w-full md:px-11">
         <AccordionItem value="item-1">
