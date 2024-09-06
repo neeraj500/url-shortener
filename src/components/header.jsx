@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { LinkIcon, LogOut } from "lucide-react";
 import { UrlState } from "@/context";
 import useFetch from "@/hooks/use-fetch";
-import { BarLoader, SyncLoader } from "react-spinners";
+import { BarLoader } from "react-spinners";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,9 +25,9 @@ const Header = () => {
   return (
     <>
       <nav className="py-4 flex justify-between items-center">
-        <Link to="/">
-          <img src="/logo.png" className="h-16" alt="Trimrr logo" />
-        </Link>
+        {/* <Link to="/"> */}
+          <img src={"/logo.png"} className="h-16" alt="Trimrrrr logo" />
+        {/* </Link> */}
 
         <div>
           {!user ? (
