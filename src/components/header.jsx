@@ -14,13 +14,14 @@ import { LinkIcon, LogOut } from "lucide-react";
 import { UrlState } from "@/context";
 import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
+import { logout } from "@/db/apiAuth";
 
 const Header = () => {
+  const {loading, fn: fnLogout} = useFetch(logout);
   const navigate = useNavigate();
-  // const user = false;
-  const { user, fetchUser } = UrlState();
 
-  const { loading, fn: fnLogout } = useFetch();
+  const {user, fetchUser} = UrlState(); 
+  const profile_pic = user?.user_metadata?.profile_pic;
 
   return (
     <>
@@ -30,6 +31,7 @@ const Header = () => {
         </Link>
 
         <div>
+          {console.log("checing pic --> ", user?.user_metadata)}
           {!user ? (
             <Button onClick={() => navigate("/auth")}>Login</Button>
           ) : (
@@ -37,7 +39,7 @@ const Header = () => {
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
                 <Avatar>
                   <AvatarImage
-                    src={user?.user_metadata?.profile_pic}
+                    src={profile_pic}
                     className="object-contain"
                   />
                   <AvatarFallback>NM</AvatarFallback>
@@ -54,18 +56,17 @@ const Header = () => {
                   <span>My Links</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-400">
+                <DropdownMenuItem
+                  onClick={() => {
+                    fnLogout().then(() => {
+                      fetchUser();
+                      navigate("/auth");
+                    });
+                  }}
+                  className="text-red-400"
+                >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span
-                    onClick={() => {
-                      fnLogout().then(() => {
-                        fetchUser();
-                        navigate("/");
-                      });
-                    }}
-                  >
-                    Logout
-                  </span>
+                  <span>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
